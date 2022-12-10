@@ -1,7 +1,6 @@
 package bootcamp.token2;
 
 
-import bootcamp.token2.Token2Contract;
 import com.google.common.collect.ImmutableList;
 import net.corda.core.contracts.BelongsToContract;
 import net.corda.core.contracts.ContractState;
