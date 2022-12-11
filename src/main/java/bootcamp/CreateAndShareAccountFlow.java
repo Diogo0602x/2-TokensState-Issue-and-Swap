@@ -13,12 +13,6 @@ import net.corda.core.identity.Party;
 
 import java.util.List;
 
-/**
- * This flow will create the account on the node on which you run this flow. This is done using inbuilt flow called CreateAccount.
- * CreateAccount creates an AccountInfo object which has name, host and id as its fields. This is mapped to Account table in the db.
- * For any other party to transact with this account, this AccountInfo will have to be shared with that Party.
- * Hence the Ipl Ticket Dealers create the ticket buyers accounts on their end and share this accountInfo with the Bank node and BCCI node.
- */
 @StartableByRPC
 @InitiatingFlow
 public class CreateAndShareAccountFlow extends FlowLogic<String> {

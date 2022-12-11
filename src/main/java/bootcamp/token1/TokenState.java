@@ -1,6 +1,5 @@
 package bootcamp.token1;
 
-import bootcamp.token1.TokenContract;
 import com.google.common.collect.ImmutableList;
 import net.corda.core.contracts.BelongsToContract;
 import net.corda.core.contracts.ContractState;
@@ -10,8 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-/* Our state, defining a shared fact on the ledger.
- * See src/main/java/examples/ArtState.java for an example. */
 @BelongsToContract(TokenContract.class)
 public class TokenState implements ContractState{
 

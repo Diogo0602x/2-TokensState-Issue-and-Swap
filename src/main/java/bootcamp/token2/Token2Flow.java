@@ -66,7 +66,7 @@ public class Token2Flow {
             //call FinalityFlow for finality
             SignedTransaction stx = subFlow(new FinalityFlow(fullySignedTx, Arrays.asList(ownerSession)));
 
-            return "One Token2 State issued to "+owner+ " from " + issuer+ " with amount: "+amount +"\ntxId: "+ stx.getId() + " from Token 2" ;
+            return "One Token2 State issued to "+owner+ " from " + issuer+ " with amount: "+amount +"\ntxId: "+ stx.getId() ;
         }
     }
 

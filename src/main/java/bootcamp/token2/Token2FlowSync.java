@@ -1,6 +1,5 @@
 package bootcamp.token2;
 
-
 import co.paralleluniverse.fibers.Suspendable;
 import com.google.common.collect.ImmutableList;
 import com.r3.corda.lib.accounts.contracts.states.AccountInfo;
