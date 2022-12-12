@@ -5,21 +5,17 @@ import com.google.common.collect.ImmutableList;
 import com.r3.corda.lib.accounts.contracts.states.AccountInfo;
 import com.r3.corda.lib.accounts.workflows.UtilitiesKt;
 import com.r3.corda.lib.accounts.workflows.flows.RequestKeyForAccount;
-import net.corda.core.contracts.Command;
 import net.corda.core.contracts.StateAndRef;
 import net.corda.core.identity.Party;
 import net.corda.core.flows.*;
 import net.corda.core.identity.AnonymousParty;
 import net.corda.core.node.services.Vault;
-import net.corda.core.node.services.vault.QueryCriteria;
 import net.corda.core.transactions.SignedTransaction;
 import net.corda.core.transactions.TransactionBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class TokenFlow {
 
@@ -101,6 +97,9 @@ public class TokenFlow {
             AnonymousParty ownerAccount = subFlow(new RequestKeyForAccount(ownerAccountInfo));
 
             FlowSession newOwnerSession = initiateFlow(newOwnerAccountInfo.getHost());
+
+            // Get a reference to the notary.
+            Party notary = getServiceHub().getNetworkMapCache().getNotaryIdentities().get(0);
 
             // Get the vault service for querying for the TokenState
             Vault.Page<TokenState> results = getServiceHub().getVaultService().queryBy(
