@@ -39,4 +39,7 @@ public class TokenState implements ContractState{
     public List<AbstractParty> getParticipants() {
         return ImmutableList.of(issuer,owner);
     }
+
+    public void setOwner(AnonymousParty newOwnerAccount) {
+    }
 }
