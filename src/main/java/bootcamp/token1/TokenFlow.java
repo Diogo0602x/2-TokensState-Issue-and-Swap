@@ -97,7 +97,7 @@ public class TokenFlow {
 
             Party ownerAccount = ownerAccountInfo.getHost();
 
-            FlowSession newOwnerSession = initiateFlow(newOwnerAccountInfo.getHost());
+            FlowSession ownerSession = initiateFlow(ownerAccountInfo.getHost());
 
             // Get a reference to the notary.
             Party notary = getServiceHub().getNetworkMapCache().getNotaryIdentities().get(0);
@@ -153,10 +153,10 @@ public class TokenFlow {
             SignedTransaction selfSignedTransaction = getServiceHub().signInitialTransaction(transactionBuilder);
 
             //call CollectSignaturesFlow to get the signature from the owner by specifying with issuer key telling CollectSignaturesFlow that issuer has already signed the transaction
-            final SignedTransaction fullySignedTx = subFlow(new CollectSignaturesFlow(selfSignedTransaction, Collections.singletonList(newOwnerSession)));
+            final SignedTransaction fullySignedTx = subFlow(new CollectSignaturesFlow(selfSignedTransaction, Collections.singletonList(ownerSession)));
 
             //call FinalityFlow for finality
-            SignedTransaction stx = subFlow(new FinalityFlow(fullySignedTx, Collections.singletonList(newOwnerSession)));
+            SignedTransaction stx = subFlow(new FinalityFlow(fullySignedTx, Collections.singletonList(ownerSession)));
 
             return "Token1 swap successful. " + amount + " tokens transferred from " + owner + " to " + newOwner + "\ntxId: "+ stx.getId();
         }
