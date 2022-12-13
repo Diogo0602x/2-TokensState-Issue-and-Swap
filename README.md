@@ -12,9 +12,6 @@ during today's bootcamp. Our CorDapp will allow the issuance of tokens to accoun
 
 1. Download and install a JDK 8 JVM (minimum supported version 8u131)
 2. Download and install IntelliJ Community Edition (supported versions 2017.x and 2018.x)
-3. Download the bootcamp-cordapp repository:
-
-       git clone https://github.com/corda/bootcamp-cordapp/tree/bootcamp-accounts
        
 4. Open IntelliJ. From the splash screen, click `Import Project`, select the `bootcamp—
 cordapp` folder and click `Open`
@@ -166,3 +163,15 @@ Run the below flow on PartyA's node.
 Run the below flow to issue token from issuerAccount on PartyA's node to ownerAccount on PartyB's node.
 
     start TokenIssuanceFlow issuer : issuerAccount, owner : ownerAccount , amount : 10
+
+#### Step 3 : Swap Token to Accounts
+
+Run the below flow on PartyA's node.
+Run the below flow to move token from owner on PartyA's node to newOwner on PartyB's node.
+
+    start TokenSwap amount : 10, owner : ownerAccount, newOwner : issuerAccount
+
+#### Step 3 : To Issue or Move using Token 2
+
+Run the above commands.
+Just Change TokenIssuanceFlow and TokenSwap to Token2IssuanceFlow and Token2Swap.
