@@ -41,8 +41,9 @@ public class TokenFlowSync {
             AccountInfo issuerAccountInfo = UtilitiesKt.getAccountService(this).accountInfo(issuer).get(0).getState().getData();
             AccountInfo ownerAccountInfo = UtilitiesKt.getAccountService(this).accountInfo(owner).get(0).getState().getData();
 
-            AnonymousParty issuerAccount = subFlow(new RequestKeyForAccount(issuerAccountInfo));
-            AnonymousParty ownerAccount = subFlow(new RequestKeyForAccount(ownerAccountInfo));
+
+            Party issuerAccount = issuerAccountInfo.getHost();
+            Party ownerAccount = ownerAccountInfo.getHost();
 
             FlowSession ownerSession = initiateFlow(ownerAccountInfo.getHost());
 
@@ -69,7 +70,7 @@ public class TokenFlowSync {
             //call FinalityFlow for finality
             SignedTransaction stx = subFlow(new FinalityFlow(fullySignedTx, Arrays.asList(ownerSession)));
 
-            return "One Token State issued to "+owner+ " from " + issuer+ " with amount: "+amount +"\ntxId: "+ stx.getId() ;
+            return "One Token1 State issued to "+owner+ " from " + issuer+ " with amount: "+amount +"\ntxId: "+ stx.getId() ;
         }
     }
 
@@ -94,7 +95,7 @@ public class TokenFlowSync {
             AccountInfo ownerAccountInfo = UtilitiesKt.getAccountService(this).accountInfo(owner).get(0).getState().getData();
             AccountInfo newOwnerAccountInfo = UtilitiesKt.getAccountService(this).accountInfo(newOwner).get(0).getState().getData();
 
-            AnonymousParty ownerAccount = subFlow(new RequestKeyForAccount(ownerAccountInfo));
+            Party ownerAccount = ownerAccountInfo.getHost();
 
             FlowSession newOwnerSession = initiateFlow(newOwnerAccountInfo.getHost());
 
@@ -116,8 +117,8 @@ public class TokenFlowSync {
             TokenState tokenState = tokenStateAndRef.getState().getData();
 
             // Check that the owner of the token is the one specified in the flow
-            if (!tokenState.getOwner().equals(owner)) {
-                throw new FlowException("The specified owner is not the owner of the token");
+            if (!tokenState.getOwner().equals(ownerAccount)) {
+                throw new FlowException("The specified owner is not the owner of the token. owner is: " + tokenState.getOwner().equals(ownerAccount));
             }
 
             // Check that the specified amount is the same as the amount of the token
@@ -126,11 +127,11 @@ public class TokenFlowSync {
             }
 
             // Get the keys of the current owner and new owner
-            AnonymousParty ownerKey = tokenState.getOwner();
-            AnonymousParty newOwnerKey = subFlow(new RequestKeyForAccount(newOwnerAccountInfo));
+            Party ownerKey = tokenState.getOwner();
+            Party newOwnerKey = newOwnerAccountInfo.getHost();
 
             // Create a new transaction builder
-            TransactionBuilder transactionBuilder = new TransactionBuilder();
+            TransactionBuilder transactionBuilder = new TransactionBuilder(notary);
 
             // Create a new TokenState with the new owner
             TokenState newTokenState = new TokenState(

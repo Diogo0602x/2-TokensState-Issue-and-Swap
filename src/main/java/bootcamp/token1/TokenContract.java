@@ -30,6 +30,18 @@ public class TokenContract implements Contract {
                 req.using("Amount must be positive.", output.getAmount() > 0);
                 return null;
             });
+        }
+
+        else if (command.getValue() instanceof TokenContract.Commands.Swap) {
+            requireThat(req -> {
+                req.using("Transaction must have no input states.", inputs.isEmpty());
+                req.using("Transaction must have exactly one output.", outputs.size() == 1);
+                req.using("Output must be a TokenState.", outputs.get(0) instanceof TokenState);
+                TokenState output = (TokenState) outputs.get(0);
+                req.using("New Owner Account must be required singer.", command.getSigners().contains(output.getOwner().getOwningKey()));
+                req.using("Amount must be positive.", output.getAmount() > 0);
+                return null;
+            });
         } else {
             throw new IllegalArgumentException("Unrecognized command");
         }
@@ -37,8 +49,6 @@ public class TokenContract implements Contract {
 
     public interface Commands extends CommandData {
         class Issue implements Commands { }
-
-
 
         class Swap implements Commands {}
 
