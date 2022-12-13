@@ -12,7 +12,6 @@ import net.corda.core.transactions.SignedTransaction;
 import net.corda.core.transactions.TransactionBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class TokenFlow {
@@ -84,8 +83,6 @@ public class TokenFlow {
             this.owner = owner;
             this.newOwner = newOwner;
         }
-
-
 
         @Suspendable
         @Override

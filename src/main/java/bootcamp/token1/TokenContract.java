@@ -1,10 +1,7 @@
 package bootcamp.token1;
 
 import net.corda.core.contracts.*;
-import net.corda.core.identity.AbstractParty;
 import net.corda.core.transactions.LedgerTransaction;
-
-import java.security.PublicKey;
 import java.util.List;
 
 import static net.corda.core.contracts.ContractsDSL.requireSingleCommand;
